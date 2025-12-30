@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to PPT - Create PowerPoint from Text Locally | iLovPDF</title>
+    <meta name="description"
+        content="Turn your text into professional PowerPoint presentations instantly. 100% private, client-side processing. Choose from multiple themes and layouts without uploading files.">
+    <meta name="keywords"
+        content="text to ppt, text to powerpoint, ppt creator, online presentation maker, text to slides, private ppt tools, local presentation generator">
+    <link rel="canonical" href="https://ilovpdf.in/text-to-ppt.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body class="bg-slate-900 text-slate-200 antialiased selection:bg-purple-500/30">
+
+    <!-- Static Content & Hero Section (Visible on Load) -->
+    <div id="static-upload-section" class="min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-xl sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+                <a href="/" class="flex items-center gap-2 font-bold text-xl tracking-tight group">
+                    <span
+                        class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-purple-500/20 group-hover:scale-105 transition-transform">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                    </span>
+                    <span class="text-white">iLov<span class="text-purple-500">PDF</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/pdf-editor.html" class="hover:text-white transition-colors">Editor</a>
+                    <a href="/pdf-merge.html" class="hover:text-white transition-colors">Merge</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Hero -->
+        <main class="flex-1 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+            <div class="container relative z-10 w-full text-center">
+                <div class="mb-12">
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">
+                        <span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400">
+                            Text to PPT
+                        </span>
+                    </h1>
+                    <p class="subtitle text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                        Create stunning presentations from your text instantly. No data ever leaves your device.
+                    </p>
+                </div>
+
+                <!-- Action Area -->
+                <div class="max-w-xl mx-auto">
+                    <div class="upload-box group relative p-1">
+                        <button id="start-creating-btn"
+                            class="relative w-full border-2 border-white/5 border-dashed hover:border-purple-500/30 rounded-[18px] p-12 cursor-pointer transition-all duration-300">
+                            <div class="flex flex-col items-center gap-6">
+                                <div
+                                    class="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-inner ring-1 ring-white/10">
+                                    <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div class="space-y-2">
+                                    <span
+                                        class="block text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">Start
+                                        Creating</span>
+                                    <span class="block text-sm text-slate-400 font-medium">Open the AI-powered
+                                        presentation maker</span>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="trust-row">
+                    <span>🔒 100% Private</span>
+                    <span>⚡ Local Processing</span>
+                    <span>💻 Works offline</span>
+                </div>
+
+                <p class="hint">
+                    After starting, you’ll be able to enter your content, choose themes, and export a professional
+                    PowerPoint instantly.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 text-left border-t border-slate-800/50">
+                <div class="p-4 rounded-xl bg-slate-800/20 border border-slate-800/50">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mb-3">
+                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">100% Private</h3>
+                    <p class="text-sm text-slate-400">Your content stays in your browser. No server storage.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-800/20 border border-slate-800/50">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mb-3">
+                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17l.354-.354" />
+                        </svg>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">Theme Presets</h3>
+                    <p class="text-sm text-slate-400">Choose from Corporate, Modern, Luxury, and more themes.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-800/20 border border-slate-800/50">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mb-3">
+                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 002-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-white font-semibold mb-1">PPTX Export</h3>
+                    <p class="text-sm text-slate-400">Download fully editable PowerPoint presentations instantly.</p>
+                </div>
+            </div>
+    </div>
+    </main>
+    <footer class="bg-slate-900 border-t border-white/5 pt-20 pb-10 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
+            <div class="col-span-2 lg:col-span-2 space-y-6">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-8 h-8 bg-purple-600 rounded-xl flex items-center justify-center text-white font-black text-lg">
+                        i</div>
+                    <span class="text-xl font-black tracking-tighter text-white uppercase">ilovpdf</span>
+                </div>
+                <p class="text-sm text-slate-400 font-medium leading-relaxed max-w-sm">
+                    The first 100% client-side, privacy-first document and image studio.
+                    Process your sensitive files securely without ever uploading them to any server.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="#"
+                        class="p-2 bg-white/5 rounded-lg text-slate-500 hover:text-purple-500 transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#"
+                        class="p-2 bg-white/5 rounded-lg text-slate-500 hover:text-purple-500 transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#"
+                        class="p-2 bg-white/5 rounded-lg text-slate-500 hover:text-purple-500 transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z">
+                            </path>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">PDF Tools</h4>
+                <ul class="space-y-3">
+                    <li><a href="/pdf-editor.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">PDF
+                            Editor</a></li>
+                    <li><a href="/pdf-to-word.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">PDF to
+                            Word</a></li>
+                    <li><a href="/pdf-split.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Split
+                            PDF</a></li>
+                    <li><a href="/pdf-merge.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Merge
+                            PDF</a></li>
+                    <li><a href="/pdf-compress.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Compress
+                            PDF</a></li>
+                    <li><a href="/pdf-to-excel.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">PDF to
+                            Excel</a></li>
+                    <li><a href="/pdf-to-ppt.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">PDF to
+                            PPT</a></li>
+                    <li><a href="/pdf-watermark.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">PDF
+                            Watermark</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-6">
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Image Tools</h4>
+                <ul class="space-y-3">
+                    <li><a href="/image-resize.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Resize
+                            Image</a></li>
+                    <li><a href="/image-editor.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Image
+                            Editor</a></li>
+                    <li><a href="/background-remover.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Remove
+                            BG</a></li>
+                    <li><a href="/image-compress.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Compress
+                            Image</a></li>
+                    <li><a href="/filters.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Filters</a>
+                    </li>
+                    <li><a href="/image-convert.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Convert
+                            Image</a></li>
+                    <li><a href="/social.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Social
+                            Resizer</a></li>
+                    <li><a href="/image-to-pdf.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Image to
+                            PDF</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-6">
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Company</h4>
+                <ul class="space-y-3">
+                    <li><a href="/seo/about.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">About
+                            ilovpdf</a></li>
+                    <li><a href="/seo/privacy.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Privacy
+                            Policy</a></li>
+                    <li><a href="/seo/terms.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Terms of
+                            Use</a></li>
+                    <li><a href="/seo/contact.html"
+                            class="text-sm font-bold text-slate-400 hover:text-purple-400 transition-colors">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            class="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                © 2025 ILOVPDF STUDIO • BROWSER-POWERED COMPUTING
+            </p>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">All Systems
+                    Operational</span>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    <!-- React Root -->
+    <div id="root" class="relative z-50"></div>
+    <script type="module" src="/src/pages/text-to-ppt.tsx"></script>
+</body>
+
+</html>

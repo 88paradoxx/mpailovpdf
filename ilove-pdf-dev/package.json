@@ -1,0 +1,34 @@
+{
+  "name": "ilovpdf",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@imgly/background-removal": "^1.7.0",
+    "docx": "^9.5.1",
+    "jspdf": "^3.0.4",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.561.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.4.449",
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.0.0",
+    "terser": "^5.44.1",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.0"
+  }
+}
