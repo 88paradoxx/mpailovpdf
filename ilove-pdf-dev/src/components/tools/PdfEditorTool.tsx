@@ -722,6 +722,62 @@ export default function PdfEditorTool({
     }
   };
 
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    if (tool !== 'hand' || !containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const canvasX = e.clientX - rect.left;
+    const canvasY = e.clientY - rect.top;
+
+    // Convert to document coordinates
+    const docX = (canvasX - viewport.x) / viewport.scale;
+    const docY = (canvasY - viewport.y) / viewport.scale;
+
+    // Find which page was clicked
+    let currentY = 0;
+    for (const page of pages) {
+      if (docY >= currentY && docY <= currentY + page.height) {
+        // Click is within this page vertical range
+        const localY = docY - currentY;
+        const localX = docX;
+
+        // Check text items for this page
+        const items = detectedText[page.id] || [];
+
+        // PDF Y (0 at bottom) vs Canvas Y (0 at top) mismatch correction
+        // localY is top-down. 
+        // item.y is usually bottom-up.
+        // Screen Top of text = page.height - item.y - item.h (approx)
+        // Screen Bottom of text = page.height - item.y (approx)
+
+        const hit = items.find(item => {
+          // Standard PDF coordinate check (Top-Left Origin vs Bottom-Left Origin)
+          // We check both standard and inverted to be safe, or just the inverted.
+          // Usually: top-down Y = pageHeight - bottom-up Y.
+
+          const itemTopY = page.height - item.y - item.h;
+          const itemBottomY = page.height - item.y;
+
+          // Allow some buffer (5px)
+          return (
+            localX >= item.x - 5 &&
+            localX <= item.x + item.w + 5 &&
+            localY >= itemTopY - 5 &&
+            localY <= itemBottomY + 5
+          );
+        });
+
+        if (hit) {
+          setTool('edit');
+          setEditingId(hit.id);
+          setEditingType('native');
+          return;
+        }
+      }
+      currentY += page.height + 32; // 32px gap
+    }
+  };
+
   const scrollToPage = (pageIdx: number) => {
     if (pages.length === 0) return;
     const safeIdx = Math.max(0, Math.min(pages.length - 1, pageIdx));
@@ -865,7 +921,18 @@ export default function PdfEditorTool({
     <div className="flex flex-col md:flex-row h-full w-full bg-[#1a1a1a] overflow-hidden text-white">
       {/* Mobile Header */}
       <div className="md:hidden h-14 bg-[#0d0d12] border-b border-white/10 flex items-center justify-between px-4 z-50 shrink-0">
-        <button onClick={onBack} className="p-2"><ArrowLeft size={18} /></button>
+        <div className="flex items-center gap-6">
+          <button onClick={onBack} className="p-2"><ArrowLeft size={18} /></button>
+
+          {/* Tools integrated in Header */}
+          <button onClick={() => setTool('hand')} className={`p-1.5 rounded-lg ${tool === 'hand' ? 'bg-purple-600' : 'text-white/50'}`}>
+            <Hand size={18} />
+          </button>
+          <button onClick={() => setTool('edit')} className={`p-1.5 rounded-lg ${tool === 'edit' ? 'bg-purple-600' : 'text-white/50'}`}>
+            <FileEdit size={18} />
+          </button>
+        </div>
+
         <div className="flex gap-2">
           <button onClick={handleSave} className="p-2 text-purple-400 font-bold">Save</button>
         </div>
@@ -983,6 +1050,7 @@ export default function PdfEditorTool({
         onPointerCancel={handlePointerUp}
         onPointerLeave={handlePointerUp}
         onWheel={handleWheel}
+        onDoubleClick={handleDoubleClick}
       >
         <div
           className="absolute origin-top-left transition-transform duration-75 ease-out"
@@ -1020,14 +1088,7 @@ export default function PdfEditorTool({
         </div>
       </main>
 
-      {/* Mobile Toolbar */}
-      <div className="md:hidden h-16 bg-[#0d0d12] border-t border-white/10 flex items-center justify-evenly shrink-0 z-50 pb-safe">
-        <button onClick={() => setTool('hand')} className={`p-2 rounded-lg ${tool === 'hand' ? 'bg-purple-600' : ''}`}><Hand size={20} /></button>
-        <button onClick={() => setTool('edit')} className={`p-2 rounded-lg ${tool === 'edit' ? 'bg-purple-600' : ''}`}><FileEdit size={20} /></button>
 
-        <div className="w-px h-8 bg-white/10" />
-        <button onClick={() => alert("Undo not impl")} className="p-2 text-white/50"><Undo size={20} /></button>
-      </div>
 
     </div>
   );
