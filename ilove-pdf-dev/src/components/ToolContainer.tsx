@@ -188,8 +188,6 @@ export default function ToolContainer({
           onCropModeToggle={onCropModeToggle!}
           onDownload={onDownload!}
           onBack={handleExitToHome!}
-          zoom={zoom!}
-          setZoom={setZoom!}
         />
       );
     case 'bg_remover':
@@ -226,11 +224,6 @@ export default function ToolContainer({
           onCommit={onCommit as any}
           onDownload={onDownload!}
           onBack={handleExitToHome}
-          image={image!}
-          zoom={zoom!}
-          setZoom={setZoom!}
-          editingTextId={editingTextId!}
-          setEditingTextId={setEditingTextId!}
         />
       );
     case 'text':

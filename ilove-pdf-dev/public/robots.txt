@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://ilovpdf.com/sitemap.xml
+Sitemap: https://ilovpdf.in/sitemap.xml
