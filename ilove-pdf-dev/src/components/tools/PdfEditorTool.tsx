@@ -492,7 +492,7 @@ export default function PdfEditorTool({
   setIsProcessing
 }: any) {
   // State
-  const [tool, setTool] = useState<'hand' | 'edit'>('edit');
+  const [tool, setTool] = useState<'hand' | 'edit'>('hand');
   const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, scale: 1 });
 
   const [pdfDoc, setPdfDoc] = useState<any>(null);
@@ -524,6 +524,9 @@ export default function PdfEditorTool({
   // Gestures
   const isDragging = useRef(false);
   const lastPos = useRef({ x: 0, y: 0 });
+  const activePointers = useRef<Map<number, { x: number, y: number }>>(new Map());
+  const initialPinchDist = useRef<number | null>(null);
+  const initialScale = useRef<number>(1);
 
   // Load PDF & Extract Text
   useEffect(() => {
@@ -561,7 +564,7 @@ export default function PdfEditorTool({
             pageIndex: i,
             w: item.width,
             h: item.height || Math.hypot(item.transform[0], item.transform[1]),
-            bgColor: { r: 255, g: 255, b: 255 } // assumption
+            bgColor: { r: 255, g: 255, b: 255 }
           }));
         }
         setPages(ps);
@@ -570,7 +573,7 @@ export default function PdfEditorTool({
         // Initial fit - align to sidebar edge
         if (containerRef.current && ps.length > 0) {
           const rect = containerRef.current.getBoundingClientRect();
-          const margin = 10; // Near the edge of the sidebar
+          const margin = 10;
           const scale = (rect.width - 40) / ps[0].width;
           const initialV = { x: margin, y: 20, scale };
 
@@ -594,7 +597,7 @@ export default function PdfEditorTool({
       if (setIsProcessing) setIsProcessing(false);
     };
     load();
-  }, [file, setIsProcessing, pages.length]); // pages.length to ensure we can re-clamp if needed
+  }, [file, setIsProcessing, pages.length]);
 
   const clampViewport = useCallback((v: Viewport, currentScale?: number) => {
     if (!containerRef.current || pages.length === 0) return v;
@@ -621,17 +624,45 @@ export default function PdfEditorTool({
   }, [pages]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (editingId) return;
-    if (draggingLayerId) return;
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
-    if (tool === 'hand') {
+    // Multi-touch Pinch
+    if (activePointers.current.size === 2) {
+      const points = Array.from(activePointers.current.values());
+      const dist = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+      initialPinchDist.current = dist;
+      initialScale.current = viewport.scale;
+      return;
+    }
+
+    if (editingId || draggingLayerId) return;
+
+    if (tool === 'hand' && activePointers.current.size === 1) {
       isDragging.current = true;
       lastPos.current = { x: e.clientX, y: e.clientY };
-      (e.target as HTMLElement).setPointerCapture(e.pointerId);
     }
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
+    if (activePointers.current.has(e.pointerId)) {
+      activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    // Handle Pinch
+    if (activePointers.current.size === 2 && initialPinchDist.current) {
+      const points = Array.from(activePointers.current.values());
+      const dist = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+
+      // Calculate limit to avoid crazy zooming
+      if (Math.abs(dist - initialPinchDist.current) > 2) { // Threshold reduced for responsiveness
+        const ratio = dist / initialPinchDist.current;
+        const newScale = Math.max(0.1, Math.min(5, initialScale.current * ratio));
+        setViewport(v => clampViewport({ ...v, scale: newScale }, newScale));
+      }
+      return;
+    }
+
     if (draggingLayerId) {
       const dx = e.clientX - lastPos.current.x;
       const dy = e.clientY - lastPos.current.y;
@@ -664,7 +695,16 @@ export default function PdfEditorTool({
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
-    isDragging.current = false;
+    activePointers.current.delete(e.pointerId);
+    (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+
+    if (activePointers.current.size < 2) {
+      initialPinchDist.current = null;
+    }
+
+    if (activePointers.current.size === 0) {
+      isDragging.current = false;
+    }
     setDraggingLayerId(null);
   };
 
@@ -936,10 +976,12 @@ export default function PdfEditorTool({
       {/* Canvas */}
       <main
         ref={containerRef}
-        className={`flex-1 relative overflow-hidden bg-[#252525] touch-none ${tool === 'hand' ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
+        className={`flex-1 relative overflow-hidden bg-[#252525] ${editingId ? 'touch-manipulation' : 'touch-none'} ${tool === 'hand' ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onPointerLeave={handlePointerUp}
         onWheel={handleWheel}
       >
         <div
